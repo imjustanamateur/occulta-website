@@ -1,32 +1,31 @@
 ---
-import { Image } from "astro:assets";
-import Card from "../ui/Card.astro";
 import Section from "./Section.astro";
-
-import propImg from "../../assets/pics/proposal-pic.png";
 ---
 
 <Section>
-  <Card>
-    <div
-      class="flex rounded-[45px] p-[60px] relative mt-[123px] mb-[163px]" style="background-color: #141414; border: 1px solid #2A2A2A;"
-    >
-      <div class="w-full md:w-[40%] flex flex-col gap-[26px]">
-        <h2 class="text-3xl font-medium">Your strategy is waiting to be found.</h2>
-        <p style="color: #AAAAAA;">
-          Most businesses are solving the wrong problems. The strategy you need isn't hidden in more data or better execution — it starts with asking the right questions.
+  <div class="py-24 reveal" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
+
+      <div class="space-y-5 max-w-2xl">
+        <p class="section-label text-xs uppercase tracking-[0.2em]" style="color: var(--accent);">
+          Let's work together
         </p>
+        <h2
+          class="font-serif font-normal leading-[1.08]"
+          style="font-size: clamp(2rem, 5vw, 4rem); color: var(--text);"
+        >
+          Your strategy is<br />waiting to be found.
+        </h2>
+        <p class="text-base leading-relaxed max-w-md" style="color: var(--text-muted);">
+          Most businesses are solving the wrong problems. The strategy you need
+          starts with asking the right questions — not adding more activity.
+        </p>
+      </div>
+
+      <div class="shrink-0">
         <a href="#contact" class="btn-primary">Start the conversation</a>
       </div>
-      <picture
-        class="hidden md:flex absolute right-[-10%] lg:right-0 top-[-15%] h-[450px] items-center justify-center"
-      >
-        <Image
-          src={propImg}
-          alt="This is an illustration"
-          class="hidden md:flex lg:h-full lg:w-auto"
-        />
-      </picture>
+
     </div>
-  </Card>
+  </div>
 </Section>

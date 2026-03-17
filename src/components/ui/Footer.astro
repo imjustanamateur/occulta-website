@@ -1,87 +1,69 @@
 ---
 import { Image } from "astro:assets";
-import Facebook from "../../assets/facebook.svg";
 import Linkedin from "../../assets/linkedin.svg";
-import Logo from "../../assets/logo-alt.svg";
-import Twitter from "../../assets/twitter.svg";
-import ShortForm from "../ui/ShortForm.astro";
-
-const logos = [
-  { name: "Linkedin", src: Linkedin, link: "https://linkedin.com/in/joao-barbosa-" },
-];
-
-const links = [
-  { name: "Services", href: "#services" },
-  { name: "Process", href: "#process" },
-  { name: "Contact", href: "#contact" },
-];
 ---
 
-<section class="sm:px-5">
-  <div class="w-full max-w-[1240px] mx-auto">
-    <div
-      class="px-[15px] py-[55px] lg:px-[60px] sm:rounded-t-[45px]" style="background-color: #0F0F0F; color: #f3f3f3; border-top: 1px solid #2A2A2A;"
-    >
-      <div>
-        <div
-          class="flex flex-col lg:flex-row gap-7 items-center justify-between"
-        >
-          <picture>
-            <a href="#home">
-              <Image src={Logo} alt="Logo for Kreatif Brand" />
-            </a>
-          </picture>
-          <ul class="flex flex-col sm:flex-row gap-5">
-            {
-              links.map((link) => {
-                return (
-                  <li class="text-center">
-                    <a class="underline" href={link.href}>
-                      {link.name}
-                    </a>
-                  </li>
-                );
-              })
-            }
-          </ul>
-          <ul class="flex gap-5">
-            {
-              logos.map((logo) => {
-                return (
-                  <li>
-                    <a href={logo.link} target="_blank">
-                      <picture>
-                        <Image src={logo.src} alt={logo.name} />
-                      </picture>
-                    </a>
-                  </li>
-                );
-              })
-            }
-          </ul>
-        </div>
+<footer style="border-top: 1px solid var(--border); background-color: var(--bg);">
+  <div class="w-full max-w-[1280px] mx-auto px-5 py-16">
 
-        <div class="flex flex-col lg:flex-row mt-[66px] mb-[51px]">
-          <div
-            class="flex text-center lg:text-start flex-col w-full lg:w-[30%]"
+    <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+
+      <!-- Brand -->
+      <div class="space-y-4 max-w-xs">
+        <p class="text-sm uppercase tracking-[0.2em]" style="color: var(--text);">OCCULTA</p>
+        <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
+          Strategy consulting that starts with the right questions. Not the comfortable ones.
+        </p>
+      </div>
+
+      <!-- Nav -->
+      <div class="flex flex-col gap-3">
+        <p class="text-xs uppercase tracking-[0.15em] mb-2" style="color: var(--text-muted);">Navigate</p>
+        {[
+          { name: "Services", href: "#services" },
+          { name: "Process",  href: "#process"  },
+          { name: "Contact",  href: "#contact"  },
+        ].map((link) => (
+          <a
+            href={link.href}
+            class="text-sm transition-colors duration-200"
+            style="color: var(--text-muted);"
+            onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'"
           >
-            <h3 class="mb-5 text-center md:text-left text-2xl text-green">Contact us</h3>
-            <div class="flex flex-col justify-between gap-4">
-              <span> Email: <a href="mailto:joaobarbosa@occulta.co" class="underline">joaobarbosa@occulta.co</a> </span>
-            </div>
-          </div>
-          <div class="flex-grow my-10 lg:my-0 lg:ml-12">
-            <ShortForm />
-          </div>
-        </div>
+            {link.name}
+          </a>
+        ))}
       </div>
 
-      <div class="h-[1px] bg-gray mb-5"></div>
-      <div
-        class="flex flex-col lg:flex-row h-20 justify-center mt-4 text-center md:justify-between md:mt-0"
-      >
-        <span>© 2025 Occulta</span>
+      <!-- Contact -->
+      <div class="space-y-3">
+        <p class="text-xs uppercase tracking-[0.15em] mb-2" style="color: var(--text-muted);">Contact</p>
+        <a
+          href="mailto:joaobarbosa@occulta.co"
+          class="text-sm transition-colors duration-200 block"
+          style="color: var(--text-muted);"
+          onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'"
+        >
+          joaobarbosa@occulta.co
+        </a>
+        <a
+          href="https://linkedin.com/in/joao-barbosa-"
+          target="_blank"
+          class="text-sm transition-colors duration-200 flex items-center gap-2"
+          style="color: var(--text-muted);"
+          onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'"
+        >
+          <Image src={Linkedin} alt="LinkedIn" class="w-4 h-4 opacity-60" />
+          LinkedIn
+        </a>
       </div>
+
     </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8" style="border-top: 1px solid var(--border);">
+      <p class="text-xs" style="color: var(--text-muted);">© 2025 Occulta</p>
+      <p class="text-xs" style="color: var(--text-muted); opacity: 0.5;">Strategy. Uncovered.</p>
+    </div>
+
   </div>
-</section>
+</footer>

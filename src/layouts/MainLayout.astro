@@ -10,21 +10,13 @@ const { ...props } = Astro.props;
 <html lang="en">
   <MainHead {...props} />
   <style>
-    html.lenis {
-      height: auto;
-    }
-    .lenis.lenis-smooth {
-      scroll-behavior: auto;
-    }
-    .lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-    }
-    .lenis.lenis-stopped {
-      overflow: hidden;
-    }
+    html.lenis { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
   </style>
   <script src="../utils/lenis"></script>
-  <body class="font-grotesk" style="background-color: #0A0A0A; color: #ffffff;">
+  <body style="background-color: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif;">
     <main>
       <Navbar />
       <slot />
@@ -32,18 +24,70 @@ const { ...props } = Astro.props;
     </main>
   </body>
 
-  <script is:inline>
-    function initReveal() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    function initAnimations() {
+      // Hero heading — word-by-word reveal
+      const heading = document.querySelector(".hero-heading");
+      if (heading) {
+        const split = new SplitText(heading, { type: "words" });
+        gsap.set(split.words, { y: 60, opacity: 0 });
+        gsap.to(split.words, {
+          y: 0,
+          opacity: 1,
+          duration: 1.0,
+          stagger: 0.07,
+          ease: "power3.out",
+          delay: 0.15,
         });
-      }, { threshold: 0.08 });
-      document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+      }
+
+      // Hero subtitle + CTA — sequential fade up
+      const heroSub = document.querySelector(".hero-sub");
+      if (heroSub) {
+        gsap.set(heroSub, { y: 20, opacity: 0 });
+        gsap.to(heroSub, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.75 });
+      }
+      const heroCta = document.querySelector(".hero-cta");
+      if (heroCta) {
+        gsap.set(heroCta, { y: 16, opacity: 0 });
+        gsap.to(heroCta, { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", delay: 1.0 });
+      }
+
+      // Scroll reveals — individual elements
+      gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          y: 36,
+          opacity: 0,
+          duration: 0.85,
+          ease: "power2.out",
+        });
+      });
+
+      // Stagger reveals — grids / lists
+      gsap.utils.toArray<HTMLElement>(".reveal-group").forEach((group) => {
+        const children = Array.from(group.children) as HTMLElement[];
+        gsap.from(children, {
+          scrollTrigger: { trigger: group, start: "top 88%", once: true },
+          y: 28,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power2.out",
+        });
+      });
     }
-    initReveal();
-    document.addEventListener('astro:after-swap', initReveal);
+
+    initAnimations();
+    document.addEventListener("astro:after-swap", () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      initAnimations();
+    });
   </script>
 </html>

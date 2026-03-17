@@ -10,20 +10,22 @@ const { index, title, description } = Astro.props;
 
 <div
   id="accordion__item"
-  class="accordion__item group h-[160px] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[45px] border border-[#2A2A2A]" style="background-color: #141414;"
+  class="accordion__item group h-[160px] overflow-hidden w-full transition-all duration-300 mb-4 rounded-2xl reveal"
+  style="background-color: var(--surface); border: 1px solid var(--border);"
 >
   <button
-    class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[60px] cursor-pointer"
+    class="accordion__toggle w-full h-[160px] flex items-center justify-between px-8 md:px-12 cursor-pointer"
     id={`${title} accordion__item menu button`}
     aria-expanded="false"
     aria-controls={`${title} accordion__item menu content`}
   >
-    <div class="flex items-center gap-[25px]">
-      <span class="hidden sm:block sm:text-6xl">0{index}</span>
-      {title}
+    <div class="flex items-center gap-6">
+      <span class="hidden sm:block font-serif italic text-4xl" style="color: var(--text-muted); opacity: 0.4;">0{index}</span>
+      <span class="text-lg md:text-xl font-normal" style="color: var(--text);">{title}</span>
     </div>
     <div
-      class="w-[58px] h-[58px] flex justify-center items-center rounded-full border border-[#C8A86B]" style="background-color: #2A2A2A;"
+      class="w-12 h-12 flex justify-center items-center rounded-full shrink-0"
+      style="border: 1px solid var(--border-strong); background-color: var(--surface-2);"
     >
       <div
         class="accordion__icon h-10 w-10 transition-transform duration-300 flex justify-center items-center relative"
@@ -35,20 +37,25 @@ const { index, title, description } = Astro.props;
   <div
     id={`${title} accordion__item menu content`}
     aria-labelledby={`${title} accordion__item menu button `}
-    class="accordion__content px-[60px]"
+    class="accordion__content px-8 md:px-12"
   >
-    <div class="w-full h-[2px] bg-black"></div>
-    <p class="prose mb-4 mt-1 max-w-full pt-5 pb-[60px] transition-[height]">
+    <div class="w-full h-px" style="background-color: var(--border-strong);"></div>
+    <p class="max-w-2xl pt-5 pb-10 text-base leading-relaxed" style="color: var(--text-muted);">
       {description}
     </p>
   </div>
 </div>
 <style>
+  .accordion__item.active {
+    background-color: rgba(143, 168, 154, 0.08) !important;
+    border-color: rgba(143, 168, 154, 0.25) !important;
+  }
+
   .accordion__icon::before,
   .accordion__icon::after {
     content: "";
     position: absolute;
-    background-color: #C8A86B;
+    background-color: var(--accent);
     transition: opacity 0.3s ease;
   }
 

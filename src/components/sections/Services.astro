@@ -11,54 +11,12 @@ import c5 from "../../assets/pics/card-pic5.png";
 import c6 from "../../assets/pics/card-pic6.png";
 
 const cards = [
-  {
-    index: 1,
-    titleTop: "Strategic",
-    titleBottom: "Diagnosis",
-    img: c1,
-    alt: "Strategic Diagnosis",
-    link: "#contact",
-  },
-  {
-    index: 2,
-    titleTop: "Strategy",
-    titleBottom: "Design",
-    img: c2,
-    alt: "Strategy Design",
-    link: "#contact",
-  },
-  {
-    index: 3,
-    titleTop: "Market",
-    titleBottom: "Intelligence",
-    img: c3,
-    alt: "Market Intelligence",
-    link: "#contact",
-  },
-  {
-    index: 1,
-    titleTop: "Hypothesis",
-    titleBottom: "Testing",
-    img: c4,
-    alt: "Hypothesis Testing",
-    link: "#contact",
-  },
-  {
-    index: 2,
-    titleTop: "Strategic",
-    titleBottom: "Narrative",
-    img: c5,
-    alt: "Strategic Narrative",
-    link: "#contact",
-  },
-  {
-    index: 3,
-    titleTop: "Advisory &",
-    titleBottom: "Accountability",
-    img: c6,
-    alt: "Advisory and Accountability",
-    link: "#contact",
-  },
+  { seq: 1, titleTop: "Strategic",  titleBottom: "Diagnosis",      link: "#contact" },
+  { seq: 2, titleTop: "Strategy",   titleBottom: "Design",          link: "#contact" },
+  { seq: 3, titleTop: "Market",     titleBottom: "Intelligence",    link: "#contact" },
+  { seq: 4, titleTop: "Hypothesis", titleBottom: "Testing",         link: "#contact" },
+  { seq: 5, titleTop: "Strategic",  titleBottom: "Narrative",       link: "#contact" },
+  { seq: 6, titleTop: "Advisory &", titleBottom: "Accountability",  link: "#contact" },
 ];
 
 const description =
@@ -68,15 +26,13 @@ const description =
 <Section id="services">
   <div class="mt-[140px] mb-5">
     <SectionTitle sectionTitle="Services" description={description} />
-    <div class="grid lg:grid-cols-2 lg:grid-rows-3 gap-10">
+    <div class="grid lg:grid-cols-2 gap-4 reveal-group">
       {
         cards.map((card) => (
           <ServiceCard
-            index={card.index}
+            seq={card.seq}
             titleTop={card.titleTop}
             titleBottom={card.titleBottom}
-            img={card.img}
-            alt={card.alt}
             link={card.link}
           />
         ))

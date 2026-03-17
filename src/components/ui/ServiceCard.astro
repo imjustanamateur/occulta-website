@@ -1,51 +1,44 @@
 ---
-import { Image } from "astro:assets";
-import Card from "./Card.astro";
-
-import gob from "../../assets/icon6.svg";
-import wob from "../../assets/icon7.svg";
-
-/* 
-1. Gray card with green title and green on black icon 
-2. Green card with gray title and green on black icon
-3. Black card with gray title and gray on black icon
-*/
-
-const { index, titleTop, titleBottom, img, alt, link } = Astro.props;
+const { seq, titleTop, titleBottom, link } = Astro.props;
+const num = String(seq).padStart(2, "0");
 ---
 
-<Card isUnderline={true}>
-  <div
-    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index === 1 ? 'text-white' : index === 2 ? 'text-white' : 'text-white'}` style={`background-color: ${index === 1 ? '#1C1C1C' : index === 2 ? '#1C1508' : '#0F0F0F'}; ${index === 3 ? 'border: 1px solid #2A2A2A;' : ''}`}
-  >
-    <h3 class=`flex flex-col col-span-2 lg:col-span-1`>
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`
-        >{titleTop}</span
-      >
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`
-        >{titleBottom}</span
-      >
-    </h3>
-    <picture
-      class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center"
+<a
+  href={link}
+  class="service-card group block p-8 md:p-10 rounded-2xl transition-all duration-300"
+  style="background-color: var(--surface); border: 1px solid var(--border);"
+>
+  <div class="flex flex-col min-h-[200px] justify-between">
+
+    <!-- Number -->
+    <span
+      class="font-serif italic leading-none select-none"
+      style="font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-muted); opacity: 0.35;"
     >
-      <Image
-        src={img}
-        alt={alt}
-        class="h-[100px] w-auto sm:h-auto sm:w-3/4 object-cover"
-      />
-    </picture>
-    <div class="flex items-end">
-      <a href={link} class="flex items-center gap-3.5"
-        ><Image src={index === 1 || index === 2 ? gob : wob} alt={alt} />
-        <span class="hidden sm:block" style="color: #C8A86B;">Explore</span></a
-      >
+      {num}
+    </span>
+
+    <!-- Title + arrow row -->
+    <div class="flex items-end justify-between gap-4">
+      <h3 class="text-2xl md:text-3xl font-normal leading-tight" style="color: var(--text);">
+        {titleTop}<br />{titleBottom}
+      </h3>
+      <span
+        class="text-lg transition-transform duration-300 group-hover:translate-x-1"
+        style="color: var(--accent); opacity: 0; transition: opacity 0.2s, transform 0.3s;"
+        data-arrow
+      >→</span>
     </div>
+
   </div>
-</Card>
+</a>
 
 <style>
-  .custom-grid {
-    grid-template: auto auto;
+  .service-card:hover {
+    border-color: var(--border-strong);
+    background-color: var(--surface-2);
+  }
+  .service-card:hover [data-arrow] {
+    opacity: 1;
   }
 </style>

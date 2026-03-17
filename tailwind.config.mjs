@@ -12,6 +12,8 @@ export default {
     extend: {
       fontFamily: {
         grotesk: ["Grotesk", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["Instrument Serif", "Georgia", "serif"],
       },
       fontWeight: {
         regular: 400,
@@ -23,6 +25,10 @@ export default {
         dark: "var(--dark)",
         gray: "var(--gray)",
         white: "var(--white)",
+        accent: "var(--accent)",
+        muted: "var(--text-muted)",
+        surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
       },
     },
   },

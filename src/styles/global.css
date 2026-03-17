@@ -19,164 +19,69 @@
     font-display: swap;
   }
 
-  .font-outline {
-    -webkit-text-stroke: 2.5px white;
-    background-color: transparent;
-  }
-  .font-outline-sm {
-    -webkit-text-stroke: 1.2px white;
-    background-color: transparent;
-  }
-
   :root {
-    --green: #C8A86B;
-    --black: #0A0A0A;
-    --dark: #0A0A0A;
-    --gray: #f3f3f3;
-    --white: #ffffff;
-    --surface: #141414;
+    /* Option B — Charcoal Slate */
+    --bg:           #17191C;
+    --surface:      #1F2226;
+    --surface-2:    #262B31;
+    --text:         #E8E4DC;
+    --text-muted:   #6B6F75;
+    --accent:       #8FA89A;
+    --accent-2:     #C2CDD6;
+    --border:       rgba(232, 228, 220, 0.07);
+    --border-strong: rgba(232, 228, 220, 0.16);
+
+    /* keep template variable names working */
+    --green: #8FA89A;
+    --black: #17191C;
+    --dark:  #17191C;
+    --gray:  #E8E4DC;
+    --white: #E8E4DC;
   }
-
-  /* @layer base {
-    * {
-      box-sizing: border-box;
-      font-family: "Grotesk", sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-size: 20px;
-    }
-
-    p {
-      font-size: 1rem;
-    }
-
-    h1 {
-      font-size: 3rem;
-      line-height: 120%;
-      font-weight: 500;
-    }
-
-    h2 {
-      font-size: 2rem;
-      font-weight: 500;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      font-weight: 500;
-    }
-
-    h4 {
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
-    @media (max-width: 640px) {
-      body {
-        font-size: 16px;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-
-      h1 {
-        font-size: 2.688rem;
-      }
-
-      h2 {
-        font-size: 2.25rem;
-      }
-
-      h3 {
-        font-size: 1.625rem;
-      }
-
-      h4 {
-        font-size: 1.125rem;
-      }
-    }
-  } */
 
   @layer components {
     .btn-primary {
-      @apply bg-dark text-white rounded-lg px-[35px] py-5 transition-all duration-200;
+      @apply inline-block rounded-lg px-9 py-4 text-base font-normal transition-all duration-200;
+      border: 1px solid var(--text);
+      color: var(--text);
+      background: transparent;
     }
     .btn-primary:hover {
-      @apply bg-green text-black transform scale-105;
+      background: var(--text);
+      color: var(--bg);
     }
 
-    .btn-secondary {
-      @apply bg-transparent text-black px-[35px] py-5 rounded-lg border border-solid border-black transition-all duration-200;
+    .btn-accent {
+      @apply inline-block rounded-lg px-9 py-4 text-base font-normal transition-all duration-200;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
     }
-    .btn-secondary:hover {
-      @apply bg-black text-white border-green transform scale-105;
-    }
-
-    .btn-tertiary {
-      @apply bg-green text-black rounded-lg px-[35px] py-5 transition-all duration-200;
-    }
-    .btn-tertiary:hover {
-      @apply bg-white text-black transform scale-105;
+    .btn-accent:hover {
+      background: var(--accent);
+      color: var(--bg);
     }
 
-    .greenhead {
-      @apply bg-green text-black rounded-[7px] px-[7px];
+    .section-label {
+      @apply flex items-center gap-3 mb-5;
     }
-
-    .whitehead {
-      @apply bg-white text-black rounded-[7px] px-[7px];
-    }
-
-    .blackhead {
-      @apply bg-black text-white rounded-[7px] px-[7px];
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.25rem;
+      height: 1px;
+      background-color: var(--accent);
+      flex-shrink: 0;
     }
   }
 }
 
-/* custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-::-webkit-scrollbar-track {
-  background: #0A0A0A;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #C8A86B;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #E0C070;
-}
-
-/* Scroll reveal animation */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
-
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-[data-reveal]:nth-child(2) { transition-delay: 0.1s; }
-[data-reveal]:nth-child(3) { transition-delay: 0.2s; }
-
-/* markdown style */
-.content p {
-  margin: 20px 0;
-  font-size: 1.1rem;
-}
-
-.content h2 {
-  margin: 20px 0;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
+/* markdown */
+.content p { margin: 20px 0; font-size: 1.1rem; }
+.content h2 { margin: 20px 0; font-size: 1.4rem; font-weight: bold; }

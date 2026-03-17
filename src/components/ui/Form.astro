@@ -1,138 +1,61 @@
 ---
-import { Image } from "astro:assets";
-import decorForm from "../../assets/pics/contact-pic.png";
 ---
 
 <div
-  class="flex relative justify-start items-center p-[60px] rounded-[45px] overflow-hidden" style="background-color: #141414; border: 1px solid #2A2A2A;"
+  class="p-8 md:p-12 rounded-2xl reveal"
+  style="background-color: var(--surface); border: 1px solid var(--border);"
 >
-  <form class="sm:p-6 h-full w-full lg:max-w-lg" name="contact" method="POST" data-netlify="true">
-    <div class="flex flex-col sm:flex-row gap-[35px] sm:items-center mb-10">
-      <div class="flex items-center gap-[14px]">
+  <form class="w-full max-w-xl space-y-6" name="contact" method="POST" data-netlify="true">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-2">
+        <label for="name" class="block text-xs uppercase tracking-[0.15em]" style="color: var(--text-muted);">Name</label>
         <input
-          type="checkbox"
-          id="checkbox1"
-          name="checkbox1"
-          class="form-checkbox text-black"
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your name"
+          class="w-full px-5 py-4 rounded-lg text-sm outline-none transition-colors duration-200"
+          style="background-color: var(--surface-2); border: 1px solid var(--border); color: var(--text);"
         />
-        <label for="checkbox1" class="text-black">Say Hi</label>
       </div>
-      <div class="flex items-center gap-[14px]">
+
+      <div class="space-y-2">
+        <label for="email" class="block text-xs uppercase tracking-[0.15em]" style="color: var(--text-muted);">Email</label>
         <input
-          type="checkbox"
-          id="checkbox2"
-          name="checkbox2"
-          class="form-checkbox text-black"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          class="w-full px-5 py-4 rounded-lg text-sm outline-none transition-colors duration-200"
+          style="background-color: var(--surface-2); border: 1px solid var(--border); color: var(--text);"
         />
-        <label for="checkbox2" class="flex items-center text-black"
-          >Get a Quote</label
-        >
       </div>
     </div>
 
-    <div class="mb-4">
-      <label for="name" class="block text-white mb-2">Name*</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Name"
-        class="w-full px-[30px] py-[18px] rounded-[14px] text-white outline-none"
-        style="background-color: #1E1E1E; border: 1px solid #3A3A3A; color: white;"
-      />
-    </div>
-
-    <div class="mb-4">
-      <label for="email" class="block text-white mb-2">Email*</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Email"
-        class="w-full px-[30px] py-[18px] rounded-[14px] text-white outline-none"
-        style="background-color: #1E1E1E; border: 1px solid #3A3A3A; color: white;"
-      />
-    </div>
-
-    <div class="mb-4">
-      <label for="message" class="block text-white mb-2">Message*</label>
+    <div class="space-y-2">
+      <label for="message" class="block text-xs uppercase tracking-[0.15em]" style="color: var(--text-muted);">What's the challenge?</label>
       <textarea
         id="message"
         name="message"
-        placeholder="Message"
-        class="w-full px-[30px] py-[18px] rounded-[14px] text-white outline-none"
-        style="background-color: #1E1E1E; border: 1px solid #3A3A3A; color: white;"
+        rows="5"
+        placeholder="Describe what you're facing — the more specific, the better."
+        class="w-full px-5 py-4 rounded-lg text-sm outline-none resize-none transition-colors duration-200"
+        style="background-color: var(--surface-2); border: 1px solid var(--border); color: var(--text);"
       ></textarea>
     </div>
 
-    <button type="submit" name="submit" class="btn-primary w-full">Send</button>
+    <button type="submit" class="btn-primary">Send message</button>
+
   </form>
-  <picture class="absolute right-[-25%] top-[2%] bottom-[2%] hidden lg:block">
-    <Image src={decorForm} alt="decor" />
-  </picture>
 </div>
+
 <style>
-  .form-checkbox {
-    appearance: none;
-    width: 28px;
-    height: 28px;
-    border: 1px solid #000;
-    border-radius: 50%;
-    outline: none;
-    cursor: pointer;
-    position: relative;
+  input:focus, textarea:focus {
+    border-color: var(--accent) !important;
   }
-
-  .form-checkbox:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: var(--green);
-    transform: scale(0);
-    transition: transform 0.1s ease-in-out;
-  }
-
-  .form-checkbox:checked:before {
-    transform: scale(0.6);
+  input::placeholder, textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
   }
 </style>
-<script>
-  function formSetup() {
-    var cb1 = document.getElementById("checkbox1") as HTMLInputElement;
-    var cb2 = document.getElementById("checkbox2") as HTMLInputElement;
-    var message = document.getElementById("message") as HTMLInputElement;
-
-    if (cb1 && cb2) {
-      cb1.checked = true;
-
-      cb2.addEventListener("change", function () {
-        if (cb2.checked) {
-          cb1.checked = false;
-          message.value =
-            "We're interested in your services! Please contact us";
-        } else {
-          message.value = "";
-          cb1.checked = true;
-        }
-      });
-      cb1.addEventListener("change", function () {
-        if (cb1.checked) {
-          cb2.checked = false;
-          message.value = "";
-        } else {
-          cb2.checked = true;
-          message.value =
-            "We're interested in your services! Please contact us";
-        }
-      });
-    }
-  }
-
-  formSetup();
-  document.addEventListener("astro:after-swap", formSetup);
-</script>
