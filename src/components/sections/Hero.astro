@@ -3,10 +3,17 @@ import Section from "./Section.astro";
 ---
 
 <Section id="home">
-  <div class="pt-40 pb-20 md:pt-52 md:pb-28" style="border-bottom: 1px solid var(--border);">
+  <div
+    class="pt-6 pb-16 md:pt-10 md:pb-24"
+    style="border-bottom: 1px solid var(--border);"
+  >
 
     <!-- Label -->
-    <div class="section-label mb-12" style="color: var(--accent);">
+    <div
+      class="section-label mb-10"
+      style="color: var(--accent);"
+      data-depth="0.008"
+    >
       <span class="text-xs uppercase tracking-[0.2em]">Strategy Consulting</span>
     </div>
 
@@ -14,24 +21,26 @@ import Section from "./Section.astro";
     <h1
       class="hero-heading font-serif font-normal leading-[1.04] mb-12"
       style="font-size: clamp(3rem, 7.5vw, 6.5rem); color: var(--text);"
+      data-depth="0.018"
     >
       Strategy isn't<br />
       a plan.<br />
       <em class="italic" style="color: var(--accent);">It's a choice.</em>
     </h1>
 
-    <!-- Subtitle + CTA row -->
+    <!-- Subtitle + CTA -->
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
       <p
         class="hero-sub text-base md:text-lg leading-relaxed max-w-md"
         style="color: var(--text-muted);"
+        data-depth="0.012"
       >
         Occulta uncovers the hidden dynamics shaping your market, challenges
         the assumptions keeping you stuck, and builds the strategy your
         business needs to win.
       </p>
-      <div class="hero-cta shrink-0">
-        <a href="#contact" class="btn-primary">Start the conversation</a>
+      <div class="hero-cta shrink-0" data-depth="0.006">
+        <a href="#contact" class="btn-primary magnetic-btn">Start the conversation</a>
       </div>
     </div>
 

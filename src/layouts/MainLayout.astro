@@ -14,9 +14,51 @@ const { ...props } = Astro.props;
     .lenis.lenis-smooth { scroll-behavior: auto; }
     .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
     .lenis.lenis-stopped { overflow: hidden; }
+
+    /* Custom cursor */
+    #cursor-dot {
+      position: fixed; top: 0; left: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #E8E4DC;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      opacity: 0; will-change: transform;
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(232, 228, 220, 0.35);
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      opacity: 0; will-change: transform;
+    }
+
+    /* Spotlight overlay */
+    #spotlight-overlay {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0;
+      background: radial-gradient(
+        700px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+        rgba(232, 228, 220, 0.04) 0%,
+        transparent 65%
+      );
+      transition: opacity 0.6s ease;
+      will-change: background;
+    }
   </style>
+
   <script src="../utils/lenis"></script>
+
   <body style="background-color: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif;">
+
+    <!-- Spotlight -->
+    <div id="spotlight-overlay" aria-hidden="true"></div>
+
+    <!-- Custom cursor (hidden on touch) -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
+
     <main>
       <Navbar />
       <slot />
@@ -31,55 +73,113 @@ const { ...props } = Astro.props;
 
     gsap.registerPlugin(ScrollTrigger, SplitText);
 
-    function initAnimations() {
-      // Hero heading — word-by-word reveal
-      const heading = document.querySelector(".hero-heading");
-      if (heading) {
-        const split = new SplitText(heading, { type: "words" });
-        gsap.set(split.words, { y: 60, opacity: 0 });
-        gsap.to(split.words, {
-          y: 0,
-          opacity: 1,
-          duration: 1.0,
-          stagger: 0.07,
-          ease: "power3.out",
-          delay: 0.15,
-        });
+    /* ── ONE-TIME EFFECTS (pointer devices only) ── */
+    const isPointer = window.matchMedia("(pointer: fine)").matches;
+
+    if (isPointer) {
+      document.body.style.cursor = "none";
+
+      const dot  = document.getElementById("cursor-dot")!;
+      const ring = document.getElementById("cursor-ring")!;
+      const spotlight = document.getElementById("spotlight-overlay")!;
+
+      // Cursor – dot tracks exactly, ring lags
+      const dotX  = gsap.quickTo(dot,  "x", { duration: 0.05 });
+      const dotY  = gsap.quickTo(dot,  "y", { duration: 0.05 });
+      const ringX = gsap.quickTo(ring, "x", { duration: 0.38, ease: "power3.out" });
+      const ringY = gsap.quickTo(ring, "y", { duration: 0.38, ease: "power3.out" });
+
+      // Hero parallax layers
+      const heroEl = document.querySelector("#home");
+      type Layer = { xTo: (v: number) => void; yTo: (v: number) => void; depth: number };
+      let layers: Layer[] = [];
+      if (heroEl) {
+        layers = Array.from(heroEl.querySelectorAll<HTMLElement>("[data-depth]")).map((el) => ({
+          xTo: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3.out" }),
+          yTo: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3.out" }),
+          depth: parseFloat(el.dataset.depth ?? "0"),
+        }));
       }
 
-      // Hero subtitle + CTA — sequential fade up
-      const heroSub = document.querySelector(".hero-sub");
-      if (heroSub) {
-        gsap.set(heroSub, { y: 20, opacity: 0 });
-        gsap.to(heroSub, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.75 });
-      }
-      const heroCta = document.querySelector(".hero-cta");
-      if (heroCta) {
-        gsap.set(heroCta, { y: 16, opacity: 0 });
-        gsap.to(heroCta, { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", delay: 1.0 });
-      }
+      let cursorVisible = false;
 
-      // Scroll reveals — individual elements
-      gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {
-        gsap.from(el, {
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
-          y: 36,
-          opacity: 0,
-          duration: 0.85,
-          ease: "power2.out",
+      window.addEventListener("mousemove", (e) => {
+        // Cursor
+        dotX(e.clientX); dotY(e.clientY);
+        ringX(e.clientX); ringY(e.clientY);
+
+        // Spotlight – direct CSS var, GPU handles gradient
+        spotlight.style.setProperty("--spot-x", e.clientX + "px");
+        spotlight.style.setProperty("--spot-y", e.clientY + "px");
+
+        if (!cursorVisible) {
+          cursorVisible = true;
+          gsap.to([dot, ring], { opacity: 1, duration: 0.4 });
+          spotlight.style.opacity = "1";
+        }
+
+        // Hero parallax
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        layers.forEach(({ xTo, yTo, depth }) => {
+          xTo((e.clientX - cx) * depth);
+          yTo((e.clientY - cy) * depth);
         });
       });
 
-      // Stagger reveals — grids / lists
+      // Ring expands on links/buttons
+      document.querySelectorAll("a, button").forEach((el) => {
+        el.addEventListener("mouseenter", () =>
+          gsap.to(ring, { scale: 1.8, borderColor: "rgba(232,228,220,0.65)", duration: 0.25 }));
+        el.addEventListener("mouseleave", () =>
+          gsap.to(ring, { scale: 1, borderColor: "rgba(232,228,220,0.35)", duration: 0.25 }));
+      });
+
+      // Magnetic CTA button
+      document.querySelectorAll<HTMLElement>(".magnetic-btn").forEach((btn) => {
+        const bx = gsap.quickTo(btn, "x", { duration: 0.45, ease: "power3.out" });
+        const by = gsap.quickTo(btn, "y", { duration: 0.45, ease: "power3.out" });
+        btn.addEventListener("mousemove", (e) => {
+          const r = btn.getBoundingClientRect();
+          bx((e.clientX - r.left - r.width  / 2) * 0.38);
+          by((e.clientY - r.top  - r.height / 2) * 0.38);
+        });
+        btn.addEventListener("mouseleave", () => { bx(0); by(0); });
+      });
+    }
+
+    /* ── PAGE LOAD + SCROLL ANIMATIONS ── */
+    function initAnimations() {
+      // Hero heading — word-by-word reveal
+      const heading = document.querySelector<HTMLElement>(".hero-heading");
+      if (heading) {
+        const split = new SplitText(heading, { type: "words" });
+        gsap.set(split.words, { y: 56, opacity: 0 });
+        gsap.to(split.words, {
+          y: 0, opacity: 1,
+          duration: 1.0, stagger: 0.07, ease: "power3.out", delay: 0.1,
+        });
+      }
+
+      // Hero subtitle + CTA cascade
+      const sub = document.querySelector(".hero-sub");
+      const cta = document.querySelector(".hero-cta");
+      if (sub) { gsap.set(sub, { y: 18, opacity: 0 }); gsap.to(sub, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.72 }); }
+      if (cta) { gsap.set(cta, { y: 14, opacity: 0 }); gsap.to(cta, { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", delay: 0.95 }); }
+
+      // Scroll reveals
+      gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          y: 32, opacity: 0, duration: 0.85, ease: "power2.out",
+        });
+      });
+
+      // Stagger grids
       gsap.utils.toArray<HTMLElement>(".reveal-group").forEach((group) => {
-        const children = Array.from(group.children) as HTMLElement[];
-        gsap.from(children, {
+        gsap.from(Array.from(group.children) as HTMLElement[], {
           scrollTrigger: { trigger: group, start: "top 88%", once: true },
-          y: 28,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power2.out",
+          y: 24, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power2.out",
         });
       });
     }
