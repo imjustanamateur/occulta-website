@@ -11,7 +11,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
 ---
 
 <div class="mt-20">
-  <nav class="w-full top-0 left-0 z-50 fixed bg-white">
+  <nav class="w-full top-0 left-0 z-50 fixed" style="background-color: #0A0A0A; border-bottom: 1px solid #2A2A2A;">
     <header class="flex flex-col lg:flex-row justify-between items-center my-5 px-6 md:px-32">
       <Astronav>
         <div class="flex w-full lg:w-auto items-center justify-between">
@@ -38,7 +38,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
               <li>
                 <a 
                   href={item.href} 
-                  class="mobile-nav-link block py-2 px-3 text-black rounded lg:bg-transparent lg:p-0"
+                  class="mobile-nav-link block py-2 px-3 text-white rounded lg:bg-transparent lg:p-0 hover:text-[#C8A86B] transition-colors duration-200"
                   data-close-menu="true"
                 >
                   {item.label}
@@ -46,8 +46,8 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
               </li>
             ))}
             <div class="lg:hidden flex items-center justify-center mt-3 gap-4">
-              <a 
-                class="mobile-nav-link px-9 py-5 rounded-2xl border border-zinc-900 bg-white hover:bg-black text-black hover:text-white inline-flex" 
+              <a
+                class="mobile-nav-link px-9 py-5 rounded-2xl border border-[#C8A86B] bg-transparent hover:bg-[#C8A86B] text-[#C8A86B] hover:text-black transition-all duration-200 inline-flex"
                 href={navButton.href}
                 data-close-menu="true"
               >
@@ -60,7 +60,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
 
       <div>
         <div class="hidden lg:flex items-center gap-4">
-          <a class="px-9 py-5 rounded-2xl border border-zinc-900 bg-white hover:bg-black text-black hover:text-white inline-flex" href={navButton.href}>
+          <a class="px-9 py-5 rounded-2xl border border-[#C8A86B] bg-transparent hover:bg-[#C8A86B] text-[#C8A86B] hover:text-black transition-all duration-200 inline-flex" href={navButton.href}>
             <h2 class="text-center text-xl font-normal leading-7">{navButton.label}</h2>
           </a>
         </div>

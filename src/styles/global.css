@@ -20,20 +20,21 @@
   }
 
   .font-outline {
-    -webkit-text-stroke: 2.5px black;
+    -webkit-text-stroke: 2.5px white;
     background-color: transparent;
   }
   .font-outline-sm {
-    -webkit-text-stroke: 1.2px black;
+    -webkit-text-stroke: 1.2px white;
     background-color: transparent;
   }
 
   :root {
-    --green: #b9ff66;
-    --black: rgb(0, 0, 0);
-    --dark: #191a23;
+    --green: #C8A86B;
+    --black: #0A0A0A;
+    --dark: #0A0A0A;
     --gray: #f3f3f3;
     --white: #ffffff;
+    --surface: #141414;
   }
 
   /* @layer base {
@@ -137,20 +138,36 @@
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #0A0A0A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
+  background: #C8A86B;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #E0C070;
 }
+
+/* Scroll reveal animation */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal]:nth-child(2) { transition-delay: 0.1s; }
+[data-reveal]:nth-child(3) { transition-delay: 0.2s; }
 
 /* markdown style */
 .content p {

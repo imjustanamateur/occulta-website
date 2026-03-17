@@ -24,11 +24,26 @@ const { ...props } = Astro.props;
     }
   </style>
   <script src="../utils/lenis"></script>
-  <body class="bg-white font-grotesk">
+  <body class="font-grotesk" style="background-color: #0A0A0A; color: #ffffff;">
     <main>
       <Navbar />
       <slot />
       <Footer />
     </main>
   </body>
+
+  <script is:inline>
+    function initReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+    }
+    initReveal();
+    document.addEventListener('astro:after-swap', initReveal);
+  </script>
 </html>
