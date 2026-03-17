@@ -50,6 +50,35 @@
   </form>
 </div>
 
+<script is:inline>
+  (function () {
+    var form = document.querySelector('form[name="contact"]');
+    if (!form) return;
+    window.dataLayer = window.dataLayer || [];
+
+    // form_start — fires on first field focus
+    var started = false;
+    form.querySelectorAll('input, textarea').forEach(function (field) {
+      field.addEventListener('focus', function () {
+        if (started) return;
+        started = true;
+        window.dataLayer.push({ event: 'form_start', form_name: 'contact' });
+      });
+    });
+
+    // form_submit — fires on submit with field fill status
+    form.addEventListener('submit', function () {
+      window.dataLayer.push({
+        event: 'form_submit',
+        form_name: 'contact',
+        has_name: !!(form.querySelector('#name') || {}).value,
+        has_email: !!(form.querySelector('#email') || {}).value,
+        has_message: !!(form.querySelector('#message') || {}).value
+      });
+    });
+  })();
+</script>
+
 <style>
   input:focus, textarea:focus {
     border-color: var(--accent) !important;

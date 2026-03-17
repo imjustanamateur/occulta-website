@@ -70,6 +70,77 @@ const { ...props } = Astro.props;
     </main>
   </body>
 
+  <script is:inline>
+    /* ── DATALAYER TRACKING ── */
+    window.dataLayer = window.dataLayer || [];
+
+    // 1. Page view
+    window.dataLayer.push({
+      event: 'page_view',
+      page_title: document.title,
+      page_path: window.location.pathname,
+      page_type: 'homepage'
+    });
+
+    // 2. Scroll depth — fires once at 25 / 50 / 75 / 100%
+    (function () {
+      var depths = [25, 50, 75, 100];
+      var fired = {};
+      window.addEventListener('scroll', function () {
+        var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+        depths.forEach(function (d) {
+          if (pct >= d && !fired[d]) {
+            fired[d] = true;
+            window.dataLayer.push({ event: 'scroll_depth', depth_percent: d });
+          }
+        });
+      }, { passive: true });
+    })();
+
+    // 3. Section view — fires once per section when 30% visible
+    (function () {
+      var sectionIds = ['services', 'process', 'contact'];
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            window.dataLayer.push({ event: 'section_view', section_id: e.target.id });
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      sectionIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) io.observe(el);
+      });
+    })();
+
+    // 4. CTA clicks — hero + navbar "Get in touch" / "Start the conversation"
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('a[href="#contact"], a[href="/#contact"]');
+      if (!target) return;
+      var loc = target.closest('nav') ? 'navbar' : target.closest('#home') ? 'hero' : 'other';
+      window.dataLayer.push({
+        event: 'cta_click',
+        cta_text: target.textContent.trim(),
+        cta_location: loc,
+        cta_type: loc === 'navbar' ? 'nav' : 'primary'
+      });
+    });
+
+    // 5. Nav link clicks (Services, Process — excludes contact handled above)
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('nav a');
+      if (!target) return;
+      var href = target.getAttribute('href') || '';
+      if (href.indexOf('#contact') !== -1) return; // already tracked as cta_click
+      window.dataLayer.push({
+        event: 'nav_click',
+        nav_label: target.textContent.trim(),
+        nav_destination: href
+      });
+    });
+  </script>
+
   <script>
     import gsap from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";

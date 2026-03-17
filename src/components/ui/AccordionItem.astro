@@ -116,6 +116,11 @@ const { index, title, description } = Astro.props;
           // Close itself if it's open, otherwise open it
           if (!accordionItem.classList.contains("active")) {
             accordionItem.classList.add("active");
+
+            // dataLayer: accordion_open
+            const stepTitle = (accordionToggle.querySelector("span:last-of-type") as HTMLElement | null)?.textContent?.trim() || "";
+            (window as any).dataLayer = (window as any).dataLayer || [];
+            (window as any).dataLayer.push({ event: "accordion_open", step_title: stepTitle });
             accordionToggle.setAttribute("aria-expanded", "true");
 
             // Set height according to content
