@@ -1,0 +1,38 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="Message received — Occulta"
+  description="Thank you for reaching out. We'll be in touch shortly."
+>
+  <section
+    class="min-h-[80vh] flex items-center justify-center px-6"
+    style="border-bottom: 1px solid var(--border);"
+  >
+    <div class="text-center max-w-xl">
+      <p class="section-label mb-8" style="color: var(--accent);">
+        <span class="text-xs uppercase tracking-[0.2em]">Message received</span>
+      </p>
+      <h1
+        class="font-serif font-normal leading-[1.1] mb-8"
+        style="font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text);"
+      >
+        We'll be in touch <em class="italic" style="color: var(--accent);">shortly.</em>
+      </h1>
+      <p class="text-base leading-relaxed mb-12" style="color: var(--text-muted);">
+        Thank you for reaching out. Expect a response within one business day.
+      </p>
+      <a href="/" class="btn-primary">Back to home</a>
+    </div>
+  </section>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'form_success',
+      form_name: 'contact',
+      page_path: '/thank-you'
+    });
+  </script>
+</MainLayout>
