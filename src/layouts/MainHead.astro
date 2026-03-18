@@ -27,6 +27,21 @@ const { title, description, image, frontmatter, robots } = Astro.props;
     {robots}
   />
 
+  <!-- Consent Mode v2 — MUST run before GTM -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    var _consent = localStorage.getItem('occulta_consent');
+    gtag('consent', 'default', {
+      analytics_storage:   _consent === 'granted' ? 'granted' : 'denied',
+      ad_storage:          'denied',
+      ad_user_data:        'denied',
+      ad_personalization:  'denied',
+      wait_for_update:     _consent === null ? 1500 : 0
+    });
+    gtag('set', 'url_passthrough', true);
+  </script>
+
   <!-- Google Tag Manager -->
   <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

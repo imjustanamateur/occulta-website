@@ -1,0 +1,62 @@
+---
+---
+
+<div
+  id="consent-banner"
+  aria-live="polite"
+  class="hidden fixed bottom-0 left-0 right-0 z-[9990] px-6 py-5 md:px-10"
+  style="background-color: var(--surface); border-top: 1px solid var(--border-strong);"
+>
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <p class="text-sm leading-relaxed" style="color: var(--text-muted); max-width: 620px;">
+      This site uses analytics to understand how visitors engage with our content.
+      No advertising trackers. Your data stays within Google Analytics.
+    </p>
+    <div class="flex gap-3 shrink-0">
+      <button
+        id="consent-decline"
+        class="text-xs uppercase tracking-[0.15em] px-5 py-3 rounded-lg transition-colors duration-200"
+        style="color: var(--text-muted); border: 1px solid var(--border-strong); background: transparent;"
+      >
+        Decline
+      </button>
+      <button id="consent-accept" class="btn-primary">
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var banner = document.getElementById('consent-banner');
+    var stored = localStorage.getItem('occulta_consent');
+
+    // Already decided — don't show
+    if (stored !== null) return;
+
+    // Show after 1.4s so page animations finish first
+    setTimeout(function () {
+      banner.classList.remove('hidden');
+    }, 1400);
+
+    function applyConsent(granted) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('consent', 'update', {
+        analytics_storage: granted ? 'granted' : 'denied'
+      });
+      localStorage.setItem('occulta_consent', granted ? 'granted' : 'denied');
+      banner.style.transition = 'opacity 0.3s ease';
+      banner.style.opacity = '0';
+      setTimeout(function () { banner.classList.add('hidden'); banner.style.opacity = ''; }, 300);
+    }
+
+    document.getElementById('consent-accept').addEventListener('click', function () {
+      applyConsent(true);
+    });
+    document.getElementById('consent-decline').addEventListener('click', function () {
+      applyConsent(false);
+    });
+  })();
+</script>
