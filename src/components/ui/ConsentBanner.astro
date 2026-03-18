@@ -46,6 +46,11 @@
       gtag('consent', 'update', {
         analytics_storage: granted ? 'granted' : 'denied'
       });
+      // Named event required by Stape server-side GTM
+      window.dataLayer.push({
+        event: 'consent_update',
+        analytics_storage: granted ? 'granted' : 'denied'
+      });
       localStorage.setItem('occulta_consent', granted ? 'granted' : 'denied');
       banner.style.transition = 'opacity 0.3s ease';
       banner.style.opacity = '0';
