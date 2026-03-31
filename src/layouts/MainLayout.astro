@@ -247,16 +247,18 @@ const { ...props } = Astro.props;
       // Scroll reveals
       gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {
         gsap.from(el, {
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          scrollTrigger: { trigger: el, start: "top 92%", once: true },
           y: 32, opacity: 0, duration: 0.85, ease: "power2.out",
+          immediateRender: false,
         });
       });
 
       // Stagger grids
       gsap.utils.toArray<HTMLElement>(".reveal-group").forEach((group) => {
         gsap.from(Array.from(group.children) as HTMLElement[], {
-          scrollTrigger: { trigger: group, start: "top 88%", once: true },
+          scrollTrigger: { trigger: group, start: "top 92%", once: true },
           y: 24, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power2.out",
+          immediateRender: false,
         });
       });
     }
