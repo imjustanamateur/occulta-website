@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #0D0D0B;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle grain texture via SVG */
+  .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+
+  /* Faint top border accent */
+  .top-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,228,220,0.3) 30%, rgba(232,228,220,0.3) 70%, transparent);
+  }
+
+  /* Left vertical accent line */
+  .left-accent {
+    position: absolute;
+    left: 80px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(232,228,220,0.12) 20%, rgba(232,228,220,0.12) 80%, transparent);
+  }
+
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 100px;
+  }
+
+  .wordmark {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: rgba(232, 228, 220, 0.5);
+    text-transform: uppercase;
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232, 228, 220, 0.35);
+  }
+
+  h1 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: normal;
+    font-size: 72px;
+    line-height: 1.05;
+    color: #E8E4DC;
+    max-width: 700px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: rgba(232, 228, 220, 0.6);
+  }
+
+  .descriptor {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    color: rgba(232, 228, 220, 0.4);
+    max-width: 480px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .url {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: rgba(232, 228, 220, 0.25);
+    text-transform: uppercase;
+  }
+
+  .tagline {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(232, 228, 220, 0.3);
+  }
+</style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="top-accent"></div>
+  <div class="left-accent"></div>
+
+  <div class="content">
+    <div class="wordmark">Occulta</div>
+
+    <div class="main">
+      <div class="label">Strategy &amp; Marketing Consulting</div>
+      <h1>Strategy is the result<br />of <em>your choices.</em></h1>
+      <p class="descriptor">Most businesses have goals. Very few have made real strategic choices. We work at that gap.</p>
+    </div>
+
+    <div class="bottom">
+      <span class="url">occulta.co</span>
+    </div>
+  </div>
+</body>
+</html>
