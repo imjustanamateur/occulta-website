@@ -16,7 +16,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
       <Astronav>
         <div class="flex w-full lg:w-auto items-center justify-between">
           <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/Logo.svg" class="h-8" alt="Logo" />
+            <span class="uppercase text-xs font-light" style="letter-spacing: 0.28em; color: var(--text);">Occulta</span>
           </a>
           <div class="block lg:hidden">
             <div id="menu-icon" class="w-8 h-8 text-black cursor-pointer">
@@ -52,9 +52,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
                 class="mobile-nav-link btn-accent inline-flex"
                 href={navButton.href}
                 data-close-menu="true"
-              >
-                <h2 class="text-center text-xl font-normal leading-7">{navButton.label}</h2>
-              </a>
+              >{navButton.label}</a>
             </div>
           </ul>
         </nav>
@@ -62,9 +60,7 @@ const navButton = { href: '/#contact', label: 'Get in touch' };
 
       <div>
         <div class="hidden lg:flex items-center gap-4">
-          <a class="btn-accent" href={navButton.href}>
-            <h2 class="text-center text-xl font-normal leading-7">{navButton.label}</h2>
-          </a>
+          <a class="btn-accent" href={navButton.href}>{navButton.label}</a>
         </div>
       </div>
     </header>

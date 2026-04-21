@@ -3,21 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  @font-face {
-    font-family: "Grotesk";
-    src: url("/fonts/grotesk/SpaceGrotesk-Regular.woff"), format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Grotesk";
-    src: url("/fonts/grotesk/SpaceGrotesk-Medium.woff"), format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
 
   :root {
     /* Option B — Charcoal Slate */
@@ -41,7 +26,9 @@
 
   @layer components {
     .btn-primary {
-      @apply inline-block rounded-lg px-9 py-4 text-base font-normal transition-all duration-200;
+      @apply inline-block rounded-none px-8 py-3 text-sm font-normal transition-all duration-200;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       border: 1px solid var(--text);
       color: var(--text);
       background: transparent;
@@ -52,7 +39,9 @@
     }
 
     .btn-accent {
-      @apply inline-block rounded-lg px-9 py-4 text-base font-normal transition-all duration-200;
+      @apply inline-block rounded-none px-8 py-3 text-sm font-normal transition-all duration-200;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       border: 1px solid var(--accent);
       color: var(--accent);
       background: transparent;
