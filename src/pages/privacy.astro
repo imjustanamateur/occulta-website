@@ -1,0 +1,123 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+---
+
+<LegalLayout
+  title="Privacy Policy — OCCULTA"
+  description="How OCCULTA processes personal data under the GDPR."
+>
+  <h1>Privacy Policy</h1>
+  <p class="last-updated"><strong>Last updated</strong>: 2026-05-14</p>
+
+  <p>
+    This Privacy Policy describes how João Barbosa, sole trader registered in Portugal under category B activity, trading as OCCULTA ("OCCULTA", "we", "us"), processes personal data when you use OCCULTA Marketing Intelligence ("the Service").
+  </p>
+
+  <h2>1. Data Controller</h2>
+  <p>
+    João Barbosa (ENI, Cat. B)<br />
+    [MORADA], Portugal<br />
+    Email: support@occulta.co
+  </p>
+  <p>
+    A formal Data Protection Officer is not appointed: the processing operations of OCCULTA do not meet the criteria of Article 37(1) GDPR. The contact above serves all data protection enquiries.
+  </p>
+
+  <h2>2. Data We Process</h2>
+  <p>
+    OCCULTA Marketing Intelligence is a B2B analytics platform that processes marketing data on behalf of business clients ("Tenants"). Categories of data:
+  </p>
+  <ul>
+    <li><strong>Account data</strong>: name, email, role of authorised users invited by a Tenant</li>
+    <li><strong>Authentication data</strong>: session tokens, IP address, user agent</li>
+    <li><strong>Marketing performance data</strong> retrieved from third-party platforms on behalf of the Tenant (Meta, Google, Brevo, D-EDGE and similar): aggregated metrics, post and campaign metadata, audience-level aggregates</li>
+    <li><strong>Usage data</strong>: pages visited within the Service, feature interactions, error logs</li>
+    <li><strong>Audit log</strong>: actions performed within the Service for security and compliance</li>
+  </ul>
+  <p>We do not process special categories of personal data (Art. 9 GDPR).</p>
+
+  <h2>3. Source of Data</h2>
+  <p>Some categories of data are not collected directly from you (Art. 14 GDPR):</p>
+  <ul>
+    <li>Marketing performance data is retrieved from third-party platforms (Meta Platforms Ireland Ltd., Google Ireland Ltd., Sendinblue/Brevo, D-EDGE Hospitality Solutions, and similar) via their official APIs, under the access scopes that the Tenant has authorised.</li>
+    <li>Where these APIs expose any identifying field of an end-user (e.g. a public commenter name on a Page post), OCCULTA stores only the minimum required to render aggregated analytics.</li>
+  </ul>
+
+  <h2>4. Legal Basis</h2>
+  <ul>
+    <li><strong>Contract performance</strong> (Art. 6(1)(b) GDPR): to provide the Service to authorised users of a Tenant</li>
+    <li><strong>Legitimate interest</strong> (Art. 6(1)(f) GDPR): security, fraud prevention, service improvement, aggregated analytics. The balance of interests has been assessed; data subjects may object under section 7.</li>
+    <li><strong>Legal obligation</strong> (Art. 6(1)(c) GDPR): audit logs and tax records</li>
+  </ul>
+
+  <h2>5. Sub-processors</h2>
+  <p>We rely on the following sub-processors:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Sub-processor</th>
+        <th>Purpose</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Supabase (Supabase Inc.)</td><td>Database, authentication, file storage</td><td>EU (Frankfurt)</td></tr>
+      <tr><td>Vercel Inc.</td><td>Application hosting</td><td>EU regions</td></tr>
+      <tr><td>Anthropic PBC</td><td>AI assistant (cached data only, no raw exports)</td><td>USA (SCC)</td></tr>
+      <tr><td>Sentry (Functional Software Inc.)</td><td>Error monitoring</td><td>EU</td></tr>
+      <tr><td>Cloudflare Inc.</td><td>DNS, email routing, CDN</td><td>Global (SCC)</td></tr>
+    </tbody>
+  </table>
+  <p>Data transferred outside the EEA is protected by Standard Contractual Clauses (SCCs) under Art. 46 GDPR.</p>
+
+  <h2>6. Automated Decision-Making</h2>
+  <p>
+    OCCULTA does not engage in automated decision-making producing legal or similarly significant effects on data subjects under Article 22 GDPR. The AI assistant feature is non-determinative: it summarises and answers questions about already-aggregated data, and no business decision is automatically enforced by it.
+  </p>
+
+  <h2>7. Retention</h2>
+  <ul>
+    <li>Account data: while the Tenant has an active subscription, plus 12 months</li>
+    <li>Marketing performance data: rolling 24 months</li>
+    <li>Audit log: 24 months</li>
+    <li>Backups: 30 days</li>
+  </ul>
+
+  <h2>8. Your Rights (Art. 15–22 GDPR)</h2>
+  <p>
+    You have the right to access, rectify, erase, restrict, port and object to the processing of your personal data. To exercise any right, contact <strong>support@occulta.co</strong>. We respond within 30 days.
+  </p>
+  <p>
+    For data deletion specifically, see our <a href="/data-deletion">Data Deletion Instructions</a>.
+  </p>
+  <p>
+    You may lodge a complaint with the Portuguese data protection authority <strong>CNPD</strong> (cnpd.pt).
+  </p>
+
+  <h2>9. Revoking Third-Party Permissions</h2>
+  <p>
+    If access to your data via Meta is via Facebook Login or Business asset assignment, you can revoke OCCULTA's access at any time:
+  </p>
+  <ul>
+    <li>Facebook: Settings &amp; Privacy → Settings → Apps and Websites → remove OCCULTA Marketing Intelligence</li>
+    <li>Instagram: Settings → Apps and Websites → Active → revoke OCCULTA Marketing Intelligence</li>
+    <li>Meta Business Manager: Business Settings → Integrations → remove OCCULTA</li>
+  </ul>
+  <p>Equivalent revocation flows exist for Google, Brevo, D-EDGE and other connected platforms.</p>
+
+  <h2>10. Security</h2>
+  <p>
+    OCCULTA enforces multi-tenant isolation at the database level (Postgres Row-Level Security), field-level encryption of sensitive credentials (pgsodium), audit logs in append-only form, MFA for administrative accounts and HTTPS-only transport.
+  </p>
+
+  <h2>11. Children</h2>
+  <p>The Service is not directed at individuals under 16. We do not knowingly process data of minors.</p>
+
+  <h2>12. Changes</h2>
+  <p>
+    We may update this policy. Material changes are communicated by email to authorised users at least 30 days in advance.
+  </p>
+
+  <h2>13. Contact</h2>
+  <p>support@occulta.co</p>
+</LegalLayout>
